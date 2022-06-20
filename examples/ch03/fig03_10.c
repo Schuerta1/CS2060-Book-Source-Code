@@ -6,17 +6,28 @@
 int main( void )
 {
    // initialize variables in definitions 
+   const unsigned int CLASS_SIZE = 10;
    unsigned int passes = 0; // number of passes   
    unsigned int failures = 0; // number of failures 
    unsigned int student = 1; // student counter    
    int result; // one exam result 
+   //char userInput[CLASS_SIZE]; Why doesnt this work
+   char userInput[10];
+   for (unsigned int i = 0; i < CLASS_SIZE; i++) { //Init array
+       userInput[i] = ' ';
+   }
+   int scanRtn = 0;
 
    // process 10 students using counter-controlled loop 
-   while ( student <= 10 ) {
+   while (student <= 10) {
 
-      // prompt user for input and obtain value from user 
-      printf( "%s", "Enter result ( 1=pass,2=fail ): " );
-      scanf( "%d", &result );
+       do {// prompt user for input and obtain value from user
+           printf("%s", "Enter result ( 1=pass,2=fail ): ");
+           scanRtn = scanf("%s", &userInput);
+           int bp = 5;
+       } while (scanRtn != 1 || (userInput != '1' && userInput != '2')); //Expecting 1 input and value 1 or 2
+       result = atoi(&userInput);
+       while (getchar() != '\n'); //Clear input buffer
 
       // if result 1, increment passes 
       if ( result == 1 ) {     
