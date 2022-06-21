@@ -5,7 +5,36 @@
 // function main begins program execution 
 int main( void )
 {
-   printf( "Welcome to C!\n" );
+	int length = 0;
+	int width = 0;
+	unsigned int area = 0;
+    int scanRtn = 0;
+    int divResult = 0;
+    //Multiplication
+    do {
+        puts("Enter the length\n");
+        scanRtn = scanf("%d", &length);
+        while (getchar() != '\n'); //Clear input buffer
+    } while (scanRtn != 1 && length >= 0); 
+
+    do {
+        puts("Enter the width\n");
+        scanRtn = scanf("%u", &width);
+        while (getchar() != '\n'); //Clear input buffer
+    } while (scanRtn != 1 && width >= 0);
+
+    area = length * width;
+    printf("Length: %u width: %u and area is %u\n", length, width, area);
+
+    //Division
+    if (width != 0) {
+        divResult = length / width;
+        printf("Quotient: %d Remainder: %d\n", divResult, length - (width * divResult));
+    }
+    else {
+        puts("Width value is 0. Cannot divide\n");
+    }
+    return 0;
 } // end function main 
 
 
