@@ -2,15 +2,27 @@
 // Passing arrays and individual array elements to functions.
 #include <stdio.h>
 #define SIZE 5
+#define ROWS 3
+#define COLS 4
 
 // function prototypes
 void modifyArray(int b[], size_t size);
 void modifyElement(int e);               
+void printArray(const int b[], size_t size);
+void init2dArray(int b[ROWS][COLS]);
+void print2DArray(const int b[][COLS], size_t sizeRows, size_t sizeCols);
 
 // function main begins program execution
 int main(void)
 {
    int a[SIZE] = { 0, 1, 2, 3, 4 }; // initialize array a
+   int b[ROWS][COLS]; // declare array b
+
+   //Print memory address
+   printf("Value of '&a[0]': %p\n", &a[0]);
+   printf("Value of '&a': %p\n", &a);
+   printf("Value of 'a': %p\n\n", a);
+
 
    puts("Effects of passing entire array by reference:\n\nThe "
       "values of the original array are:");
@@ -37,7 +49,15 @@ int main(void)
    modifyElement(a[3]); // pass array element a[3] by value
 
    // output value of a[3]
-   printf("The value of a[3] is %d\n", a[3]);
+   printf("The value of a[3] is %d\n\n", a[3]);
+
+   //Print array contents
+   printArray(a, SIZE);
+
+   //Tell user to set 2D array
+   init2dArray(b);
+   print2DArray(b, ROWS, COLS);
+   puts("");
 }
 
 // in function modifyArray, "b" points to the original array "a" 
@@ -57,6 +77,48 @@ void modifyElement(int e)
    // multiply parameter by 2                                  
    printf("Value in modifyElement is %d\n", e *= 2);            
 } 
+
+// in function printArray, "b" points to the original array "a" 
+// in memory. Principle of least privilege: array is const and thus not modifiable                                  
+void printArray(const int b[], size_t size)
+{            
+    printf("%s", "Array contents:");
+    for (unsigned int i = 0; i < size; i++) {
+        printf(" [%d]", b[i]);
+    }
+    puts("");
+}
+
+// in function init2dArray, "b" points to the original 2d array "b" 
+// in memory. 
+void init2dArray(int b[ROWS][COLS])
+{
+    int scanRtn = 0;
+    int userInput = 0;
+    for (unsigned int i = 0; i < ROWS; i++) {
+        for (unsigned int j = 0; j < COLS; j++) {
+            do {
+                printf("Row %u Col %u Value = ", i, j); //Ask user for value
+                scanRtn = scanf("%d", &userInput);
+                while (getchar() != '\n'); //Clear input buffer
+            } while (scanRtn != 1);
+            b[i][j] = userInput;
+        }
+    }
+}
+
+// in function print2DArray, "b" points to the original array b" 
+// in memory. Principle of least privilege: array is const and thus not modifiable                                  
+void print2DArray(const int b[][COLS], size_t sizeRows, size_t sizeCols)
+{
+    puts("Array contents:");
+    for (unsigned int i = 0; i < sizeRows; i++) {
+        for (unsigned int j = 0; j < sizeCols; j++) {
+            printf("[%d]\t", b[i][j]);
+        }
+        puts(""); //newline aka next row
+    }
+}
                           
 
 
