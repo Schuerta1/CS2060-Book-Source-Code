@@ -1,49 +1,60 @@
 // Fig. 7.28: fig07_28.c
 // Demonstrating an array of pointers to functions.
 #include <stdio.h>
+#include <stdbool.h>
 
 // prototypes
-void function1(int a);
-void function2(int b);
-void function3(int c);
+float add(double a, double b);
+float subtract(double a, double b);
+float multiply(double a, double b);
+float divide(double a, double b);
 
 int main(void)
 {
-   // initialize array of 3 pointers to functions that each take an
-   // int argument and return void                              
-   void (*f[3])(int) = {function1, function2, function3};    
+    // initialize array of 3 pointers to functions that each take an
+    float (*f[4])(double, double) = { add, subtract, multiply, divide };
+    float funcReturn = 0;
+    size_t choice; // variable to hold user's choice
+    double num1 = 0;
+    double num2 = 0;
+    bool programDone = false;
+    unsigned int scanReturn = 0;
 
-   printf("%s", "Enter a number between 0 and 2, 3 to end: ");
-   size_t choice; // variable to hold user's choice
-   scanf("%u", &choice);
-
-   // process user's choice
-   while (choice >= 0 && choice < 3) {
-
-      // invoke function at location choice in array f and pass
-      // choice as an argument                              
-      (*f[choice])(choice);                                
-
-      printf("%s", "Enter a number between 0 and 2, 3 to end: ");
-      scanf("%u", &choice);
-   } 
-
+    // process user's choice
+    while (!programDone){
+        do {
+            printf("%s", "Enter 0 (+), 1 (-), 2 (*), 3 (/), 4 to end: ");
+            scanReturn = scanf("%llu", &choice);
+        } while (scanReturn != 1 || choice <0 || choice > 4);
+        if (choice != 4) {
+            do {
+                puts("Enter 2 values: ");
+                scanReturn = scanf("%lf %lf", &num1, &num2);
+            } while (scanReturn != 2);
+            funcReturn = (*f[choice])(num1, num2);
+            printf("Result: %f\n", funcReturn);
+        }
+    }
    puts("Program execution completed.");
 } 
 
-void function1(int a)
+float add(double a, double b) //Add
 {
-   printf("You entered %d so function1 was called\n\n", a);
+    return a + b;
 }
 
-void function2(int b)
+float subtract(double a, double b) //subtract
 {
-   printf("You entered %d so function2 was called\n\n", b);
+    return a - b;
 }
 
-void function3(int c)
+float multiply(double a, double b) //multiply
 {
-   printf("You entered %d so function3 was called\n\n", c);  
+    return a * b;
+}
+float divide(double a, double b) //divide
+{
+    return a/b;
 }
 
 
