@@ -25,8 +25,8 @@ int main(void)
         do {
             printf("%s", "Enter 0 (+), 1 (-), 2 (*), 3 (/), 4 to end: ");
             scanReturn = scanf("%llu", &choice);
+            while (getchar() != '\n'); //Clear input buffer
         } while (scanReturn != 1 || choice <0 || choice > 4);
-        while (getchar() != '\n'); //Clear input buffer
         if (choice != 4) {
             do {
                 puts("Enter 2 values: ");
@@ -34,8 +34,8 @@ int main(void)
             } while (scanReturn != 2);
             funcReturn = (*f[choice])(num1, num2);
             printf("Result: %f\n", funcReturn);
+            while (getchar() != '\n'); //Clear input buffer
         }
-        while (getchar() != '\n'); //Clear input buffer
     }
    puts("Program execution completed.");
 } 
